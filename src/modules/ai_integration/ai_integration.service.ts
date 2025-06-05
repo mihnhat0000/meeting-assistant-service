@@ -14,7 +14,7 @@ export class AiIntegrationService {
 
   async summarizeText(text: string): Promise<{ summary: string }> {
     const apiKey = this.configService.get<string>('OPENAI_API_KEY');
-    
+
     if (!apiKey) {
       throw new Error('OpenAI API key not configured');
     }
@@ -40,7 +40,7 @@ export class AiIntegrationService {
           },
           {
             headers: {
-              'Authorization': `Bearer ${apiKey}`,
+              Authorization: `Bearer ${apiKey}`,
               'Content-Type': 'application/json',
             },
           },
@@ -48,7 +48,7 @@ export class AiIntegrationService {
       );
 
       const summary = response.data.choices[0]?.message?.content?.trim();
-      
+
       if (!summary) {
         throw new Error('No summary generated');
       }
@@ -62,7 +62,7 @@ export class AiIntegrationService {
 
   async analyzeSentiment(text: string): Promise<{ sentiment: string; score: number }> {
     const apiKey = this.configService.get<string>('OPENAI_API_KEY');
-    
+
     if (!apiKey) {
       throw new Error('OpenAI API key not configured');
     }
@@ -76,7 +76,8 @@ export class AiIntegrationService {
             messages: [
               {
                 role: 'system',
-                content: 'You are a sentiment analysis assistant. Analyze the sentiment of the given text and respond with a JSON object containing "sentiment" (positive, negative, or neutral) and "score" (a number between -1 and 1, where -1 is very negative, 0 is neutral, and 1 is very positive).',
+                content:
+                  'You are a sentiment analysis assistant. Analyze the sentiment of the given text and respond with a JSON object containing "sentiment" (positive, negative, or neutral) and "score" (a number between -1 and 1, where -1 is very negative, 0 is neutral, and 1 is very positive).',
               },
               {
                 role: 'user',
@@ -88,7 +89,7 @@ export class AiIntegrationService {
           },
           {
             headers: {
-              'Authorization': `Bearer ${apiKey}`,
+              Authorization: `Bearer ${apiKey}`,
               'Content-Type': 'application/json',
             },
           },
@@ -96,7 +97,7 @@ export class AiIntegrationService {
       );
 
       const result = response.data.choices[0]?.message?.content?.trim();
-      
+
       if (!result) {
         throw new Error('No sentiment analysis generated');
       }

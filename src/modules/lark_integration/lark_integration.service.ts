@@ -20,7 +20,7 @@ export class LarkIntegrationService {
   ) {}
 
   private async getTenantAccessToken(): Promise<string> {
-    const now = Date.now();    // Return cached token if still valid
+    const now = Date.now(); // Return cached token if still valid
     if (this.tenantAccessToken && now < this.tokenExpiryTime) {
       return this.tenantAccessToken;
     }
@@ -46,7 +46,8 @@ export class LarkIntegrationService {
             },
           },
         ),
-      );      if (response.data.code === 0) {
+      );
+      if (response.data.code === 0) {
         this.tenantAccessToken = response.data.tenant_access_token;
         // Set expiry time (usually 2 hours, we'll refresh 10 minutes early)
         this.tokenExpiryTime = now + (response.data.expire - 600) * 1000;
@@ -85,23 +86,19 @@ export class LarkIntegrationService {
       }
 
       if (taskDetails.assigneeIds && taskDetails.assigneeIds.length > 0) {
-        taskData.collaborators = taskDetails.assigneeIds.map(id => ({
+        taskData.collaborators = taskDetails.assigneeIds.map((id) => ({
           id,
           type: 'user',
         }));
       }
 
       const response = await firstValueFrom(
-        this.httpService.post(
-          'https://open.feishu.cn/open-apis/task/v1/tasks',
-          taskData,
-          {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
-            },
+        this.httpService.post('https://open.feishu.cn/open-apis/task/v1/tasks', taskData, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
           },
-        ),
+        }),
       );
 
       if (response.data.code === 0) {
@@ -141,23 +138,19 @@ export class LarkIntegrationService {
 
       if (eventDetails.attendees && eventDetails.attendees.length > 0) {
         eventData.attendee_ability = 'can_see_others';
-        eventData.attendees = eventDetails.attendees.map(email => ({
+        eventData.attendees = eventDetails.attendees.map((email) => ({
           type: 'user',
           user_id: email,
         }));
       }
 
       const response = await firstValueFrom(
-        this.httpService.post(
-          'https://open.feishu.cn/open-apis/calendar/v4/calendars/primary/events',
-          eventData,
-          {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
-            },
+        this.httpService.post('https://open.feishu.cn/open-apis/calendar/v4/calendars/primary/events', eventData, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
           },
-        ),
+        }),
       );
 
       if (response.data.code === 0) {
@@ -182,7 +175,7 @@ export class LarkIntegrationService {
 
     try {
       const eventType = payload.header?.event_type;
-      
+
       if (eventType === 'task.task.updated_v1') {
         const larkTaskId = payload.event?.object?.task_id;
         const taskData = payload.event?.object;
@@ -228,9 +221,8 @@ export class LarkIntegrationService {
 
     try {
       const eventType = payload.header?.event_type;
-      
-      if (eventType === 'calendar.calendar.event.created_v4' || 
-          eventType === 'calendar.calendar.event.updated_v4') {
+
+      if (eventType === 'calendar.calendar.event.created_v4' || eventType === 'calendar.calendar.event.updated_v4') {
         // Handle calendar event changes
         // This could trigger creation of tasks or other actions
         this.logger.log(`Handled Lark calendar event: ${eventType}`);

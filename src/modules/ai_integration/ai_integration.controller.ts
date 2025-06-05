@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../core/guards/jwt-auth.guard';
 import { AiIntegrationService } from './ai_integration.service';
 import { SummarizeTextDto, AnalyzeSentimentDto } from './dto/ai-request.dto';

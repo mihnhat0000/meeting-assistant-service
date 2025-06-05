@@ -6,10 +6,7 @@ import { LarkIntegrationService } from './lark_integration.service';
 import { TaskEntity } from '../task_management/task.entity';
 
 @Module({
-  imports: [
-    HttpModule,
-    TypeOrmModule.forFeature([TaskEntity]),
-  ],
+  imports: [HttpModule, TypeOrmModule.forFeature([TaskEntity])],
   controllers: [LarkIntegrationController],
   providers: [LarkIntegrationService],
   exports: [LarkIntegrationService],

@@ -39,10 +39,7 @@ export class TranscriptionProcessor {
 
     try {
       // Update status to processing
-      await this.transcriptionService.updateTranscriptionStatus(
-        transcriptionId,
-        TranscriptionStatus.PROCESSING,
-      );
+      await this.transcriptionService.updateTranscriptionStatus(transcriptionId, TranscriptionStatus.PROCESSING);
 
       // TODO: FFmpeg conversion would go here
       // For now, we'll assume the file is already in the correct format
@@ -59,11 +56,12 @@ export class TranscriptionProcessor {
         transcriptionResult.language,
       );
 
-      this.logger.log(`Transcription completed for audio recording: ${audioRecordingId}`);    } catch (error) {
+      this.logger.log(`Transcription completed for audio recording: ${audioRecordingId}`);
+    } catch (error) {
       this.logger.error(`Transcription failed for audio recording: ${audioRecordingId}`, error);
-      
+
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      
+
       // Update transcription with error
       await this.transcriptionService.updateTranscriptionStatus(
         transcriptionId,
@@ -77,7 +75,7 @@ export class TranscriptionProcessor {
 
   private async transcribeWithOpenAI(filePath: string): Promise<{ text: string; language: string }> {
     const apiKey = this.configService.get<string>('OPENAI_API_KEY');
-    
+
     if (!apiKey) {
       throw new Error('OpenAI API key not configured');
     }
@@ -90,20 +88,18 @@ export class TranscriptionProcessor {
       const formData = new FormData();
       formData.append('file', fs.createReadStream(filePath));
       formData.append('model', 'whisper-1');
-      formData.append('response_format', 'verbose_json');      const response = await firstValueFrom(
-        this.httpService.post<OpenAITranscriptionResponse>(
-          'https://api.openai.com/v1/audio/transcriptions',
-          formData,
-          {
-            headers: {
-              'Authorization': `Bearer ${apiKey}`,
-              ...formData.getHeaders(),
-            },
-            maxContentLength: Infinity,
-            maxBodyLength: Infinity,
+      formData.append('response_format', 'verbose_json');
+      const response = await firstValueFrom(
+        this.httpService.post<OpenAITranscriptionResponse>('https://api.openai.com/v1/audio/transcriptions', formData, {
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            ...formData.getHeaders(),
           },
-        ),
-      );return {
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
+        }),
+      );
+      return {
         text: response.data.text,
         language: response.data.language || 'unknown',
       };
@@ -125,7 +121,7 @@ export class TranscriptionProcessor {
     //   });
     // });
     // return outputPath;
-    
+
     this.logger.log('Audio format conversion placeholder - returning original file');
     return Promise.resolve(inputPath);
   }

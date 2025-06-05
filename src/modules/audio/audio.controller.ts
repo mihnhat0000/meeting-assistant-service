@@ -36,18 +36,14 @@ export class AudioController {
       },
     }),
   )
-  async uploadAudio(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() metadataDto: AudioMetadataDto,
-    @Req() req: any,
-  ) {
+  async uploadAudio(@UploadedFile() file: Express.Multer.File, @Body() metadataDto: AudioMetadataDto, @Req() req: any) {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
 
     // Use userId from JWT payload instead of body for security
     const userId = req.user.id;
-    
+
     return await this.audioService.saveAudioFile(file, userId, metadataDto);
   }
 

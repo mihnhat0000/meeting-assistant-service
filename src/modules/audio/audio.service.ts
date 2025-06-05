@@ -17,11 +17,7 @@ export class AudioService {
     private readonly configService: ConfigService,
   ) {}
 
-  async saveAudioFile(
-    file: Express.Multer.File,
-    userId: string,
-    metadata?: any,
-  ): Promise<AudioRecordingEntity> {
+  async saveAudioFile(file: Express.Multer.File, userId: string, metadata?: any): Promise<AudioRecordingEntity> {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
@@ -37,7 +33,7 @@ export class AudioService {
       const timestamp = Date.now();
       const fileExtension = path.extname(file.originalname);
       const fileName = `${timestamp}_${userId}${fileExtension}`;
-      
+
       // Get upload path from config
       const uploadPath = this.configService.get<string>('UPLOAD_AUDIO_PATH') || './uploads/audio/';
       const fullPath = path.join(uploadPath, fileName);
@@ -48,7 +44,7 @@ export class AudioService {
       }
 
       // Save file to disk
-      fs.writeFileSync(fullPath, file.buffer);      // Create database record
+      fs.writeFileSync(fullPath, file.buffer); // Create database record
       const audioRecording = this.audioRepository.create({
         userId,
         originalFileName: file.originalname,

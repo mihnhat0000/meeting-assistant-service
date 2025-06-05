@@ -36,8 +36,8 @@ export class TaskService {
 
     // Validate audio recording if provided
     if (createTaskDto.audioRecordingId) {
-      const audioRecording = await this.audioRepository.findOne({ 
-        where: { id: createTaskDto.audioRecordingId } 
+      const audioRecording = await this.audioRepository.findOne({
+        where: { id: createTaskDto.audioRecordingId },
       });
       if (!audioRecording) {
         throw new NotFoundException('Audio recording not found');
@@ -60,7 +60,8 @@ export class TaskService {
     status?: TaskStatus,
     assigneeId?: string,
   ): Promise<{ tasks: TaskEntity[]; total: number; page: number; limit: number }> {
-    const queryBuilder = this.taskRepository.createQueryBuilder('task')
+    const queryBuilder = this.taskRepository
+      .createQueryBuilder('task')
       .leftJoinAndSelect('task.assignee', 'assignee')
       .leftJoinAndSelect('task.reporter', 'reporter')
       .leftJoinAndSelect('task.audioRecording', 'audioRecording');
@@ -105,8 +106,8 @@ export class TaskService {
 
     // Validate assignee if being updated
     if (updateTaskDto.assigneeId && updateTaskDto.assigneeId !== task.assigneeId) {
-      const assignee = await this.userRepository.findOne({ 
-        where: { id: updateTaskDto.assigneeId } 
+      const assignee = await this.userRepository.findOne({
+        where: { id: updateTaskDto.assigneeId },
       });
       if (!assignee) {
         throw new NotFoundException('Assignee not found');
@@ -115,8 +116,8 @@ export class TaskService {
 
     // Validate audio recording if being updated
     if (updateTaskDto.audioRecordingId && updateTaskDto.audioRecordingId !== task.audioRecordingId) {
-      const audioRecording = await this.audioRepository.findOne({ 
-        where: { id: updateTaskDto.audioRecordingId } 
+      const audioRecording = await this.audioRepository.findOne({
+        where: { id: updateTaskDto.audioRecordingId },
       });
       if (!audioRecording) {
         throw new NotFoundException('Audio recording not found');

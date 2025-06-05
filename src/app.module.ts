@@ -47,7 +47,7 @@ import { TaskManagementModule } from './modules/task_management/task_management.
         },
       }),
       inject: [ConfigService],
-    }),    // Business modules
+    }), // Business modules
     AuthModule,
     AudioModule,
     TranscriptionModule,
@@ -58,7 +58,7 @@ import { TaskManagementModule } from './modules/task_management/task_management.
   controllers: [AppController],
   providers: [
     AppService,
-    
+
     // Global pipes
     {
       provide: APP_PIPE,

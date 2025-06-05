@@ -5,7 +5,8 @@ import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {  constructor(
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(
     private configService: ConfigService,
     private authService: AuthService,
   ) {
@@ -13,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {  constructor(
     if (!jwtSecret) {
       throw new Error('JWT_SECRET is not configured');
     }
-    
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,

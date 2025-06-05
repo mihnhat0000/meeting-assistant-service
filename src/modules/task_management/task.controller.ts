@@ -1,15 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Req,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Query } from '@nestjs/common';
 import { JwtAuthGuard } from '../../core/guards/jwt-auth.guard';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -35,7 +24,7 @@ export class TaskController {
   ) {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
-    
+
     return await this.taskService.findAll(pageNum, limitNum, status, assigneeId);
   }
 

@@ -47,9 +47,9 @@ export class AudioRecordingEntity {
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  @OneToOne(() => TranscriptionEntity, (transcription) => transcription.audioRecording, { 
-    eager: false, 
-    nullable: true 
+  @OneToOne(() => TranscriptionEntity, (transcription) => transcription.audioRecording, {
+    eager: false,
+    nullable: true,
   })
   transcription: TranscriptionEntity;
 }

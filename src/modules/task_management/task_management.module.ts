@@ -7,9 +7,7 @@ import { UserEntity } from '../auth/user.entity';
 import { AudioRecordingEntity } from '../audio/audio-recording.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([TaskEntity, UserEntity, AudioRecordingEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([TaskEntity, UserEntity, AudioRecordingEntity])],
   controllers: [TaskController],
   providers: [TaskService],
   exports: [TaskService],
