@@ -15,7 +15,7 @@ import { AudioRecordingEntity } from '../audio/audio-recording.entity';
     BullModule.registerQueueAsync({
       name: 'audio-transcription',
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         redis: {
           host: configService.get('REDIS_HOST'),
           port: configService.get('REDIS_PORT'),

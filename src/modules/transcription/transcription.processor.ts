@@ -101,11 +101,11 @@ export class TranscriptionProcessor {
       );
       return {
         text: response.data.text,
-        language: response.data.language || 'unknown',
+        language: response.data.language ?? 'unknown',
       };
     } catch (error: any) {
-      const errorMessage = error?.response?.data?.error?.message || error?.message || 'Unknown error occurred';
-      this.logger.error('OpenAI API error:', error?.response?.data || errorMessage);
+      const errorMessage = error?.response?.data?.error?.message ?? error?.message ?? 'Unknown error occurred';
+      this.logger.error('OpenAI API error:', error?.response?.data ?? errorMessage);
       throw new Error(`OpenAI transcription failed: ${errorMessage}`);
     }
   }

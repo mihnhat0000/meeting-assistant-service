@@ -13,7 +13,7 @@ import { UserEntity } from '../../shared/auth/user.entity';
     MulterModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        dest: configService.get<string>('UPLOAD_AUDIO_PATH') || './uploads/audio/',
+        dest: configService.get<string>('UPLOAD_AUDIO_PATH') ?? './uploads/audio/',
       }),
       inject: [ConfigService],
     }),

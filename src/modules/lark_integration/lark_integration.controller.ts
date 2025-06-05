@@ -38,11 +38,10 @@ export class LarkIntegrationController {
 
       // Determine event type and route to appropriate handler
       const eventType = payload.header?.event_type;
-
       if (eventType?.startsWith('task.')) {
         await this.larkIntegrationService.handleTaskUpdateWebhook(payload, signature, timestamp);
       } else if (eventType?.startsWith('calendar.')) {
-        await this.larkIntegrationService.handleCalendarEventWebhook(payload, signature, timestamp);
+        this.larkIntegrationService.handleCalendarEventWebhook(payload, signature, timestamp);
       }
 
       return { message: 'Webhook processed successfully' };

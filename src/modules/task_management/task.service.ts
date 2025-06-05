@@ -47,7 +47,7 @@ export class TaskService {
     const task = this.taskRepository.create({
       ...createTaskDto,
       reporterId,
-      status: createTaskDto.status || TaskStatus.TODO,
+      status: createTaskDto.status ?? TaskStatus.TODO,
       dueDate: createTaskDto.dueDate ? new Date(createTaskDto.dueDate) : undefined,
     });
 

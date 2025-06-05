@@ -56,8 +56,8 @@ export class LarkIntegrationService {
         throw new Error(`Failed to get tenant access token: ${response.data.msg}`);
       }
     } catch (error) {
-      this.logger.error('Failed to get Lark tenant access token:', error.response?.data || error.message);
-      throw new Error(`Lark authentication failed: ${error.response?.data?.msg || error.message}`);
+      this.logger.error('Failed to get Lark tenant access token:', error.response?.data ?? error.message);
+      throw new Error(`Lark authentication failed: ${error.response?.data?.msg ?? error.message}`);
     }
   }
 
@@ -73,7 +73,7 @@ export class LarkIntegrationService {
       const taskData: any = {
         summary: taskDetails.title,
         description: {
-          text: taskDetails.description || '',
+          text: taskDetails.description ?? '',
           type: 'text',
         },
       };
@@ -110,8 +110,8 @@ export class LarkIntegrationService {
         throw new Error(`Failed to create Lark task: ${response.data.msg}`);
       }
     } catch (error) {
-      this.logger.error('Failed to create Lark task:', error.response?.data || error.message);
-      throw new Error(`Lark task creation failed: ${error.response?.data?.msg || error.message}`);
+      this.logger.error('Failed to create Lark task:', error.response?.data ?? error.message);
+      throw new Error(`Lark task creation failed: ${error.response?.data?.msg ?? error.message}`);
     }
   }
 
@@ -127,7 +127,7 @@ export class LarkIntegrationService {
     try {
       const eventData: any = {
         summary: eventDetails.summary,
-        description: eventDetails.description || '',
+        description: eventDetails.description ?? '',
         start_time: {
           timestamp: Math.floor(new Date(eventDetails.startTime).getTime() / 1000).toString(),
         },
@@ -159,12 +159,12 @@ export class LarkIntegrationService {
         throw new Error(`Failed to create Lark calendar event: ${response.data.msg}`);
       }
     } catch (error) {
-      this.logger.error('Failed to create Lark calendar event:', error.response?.data || error.message);
-      throw new Error(`Lark calendar event creation failed: ${error.response?.data?.msg || error.message}`);
+      this.logger.error('Failed to create Lark calendar event:', error.response?.data ?? error.message);
+      throw new Error(`Lark calendar event creation failed: ${error.response?.data?.msg ?? error.message}`);
     }
   }
 
-  async handleTaskUpdateWebhook(payload: any, signature: string, timestamp: string): Promise<void> {
+  async handleTaskUpdateWebhook(payload: any, _signature: string, _timestamp: string): Promise<void> {
     // TODO: Implement signature verification
     // const expectedSignature = this.calculateSignature(payload, timestamp);
     // if (signature !== expectedSignature) {
@@ -210,7 +210,7 @@ export class LarkIntegrationService {
     }
   }
 
-  async handleCalendarEventWebhook(payload: any, signature: string, timestamp: string): Promise<void> {
+  handleCalendarEventWebhook(payload: any, _signature: string, _timestamp: string): void {
     // TODO: Implement signature verification
     // const expectedSignature = this.calculateSignature(payload, timestamp);
     // if (signature !== expectedSignature) {

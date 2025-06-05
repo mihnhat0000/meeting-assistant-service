@@ -32,10 +32,8 @@ export class AudioService {
       // Generate unique filename
       const timestamp = Date.now();
       const fileExtension = path.extname(file.originalname);
-      const fileName = `${timestamp}_${userId}${fileExtension}`;
-
-      // Get upload path from config
-      const uploadPath = this.configService.get<string>('UPLOAD_AUDIO_PATH') || './uploads/audio/';
+      const fileName = `${timestamp}_${userId}${fileExtension}`; // Get upload path from config
+      const uploadPath = this.configService.get<string>('UPLOAD_AUDIO_PATH') ?? './uploads/audio/';
       const fullPath = path.join(uploadPath, fileName);
 
       // Ensure directory exists

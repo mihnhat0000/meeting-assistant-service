@@ -55,8 +55,8 @@ export class AiIntegrationService {
 
       return { summary };
     } catch (error) {
-      this.logger.error('OpenAI summarization error:', error.response?.data || error.message);
-      throw new Error(`Text summarization failed: ${error.response?.data?.error?.message || error.message}`);
+      this.logger.error('OpenAI summarization error:', error.response?.data ?? error.message);
+      throw new Error(`Text summarization failed: ${error.response?.data?.error?.message ?? error.message}`);
     }
   }
 
@@ -105,10 +105,10 @@ export class AiIntegrationService {
       try {
         const parsed = JSON.parse(result);
         return {
-          sentiment: parsed.sentiment || 'neutral',
-          score: parsed.score || 0,
+          sentiment: parsed.sentiment ?? 'neutral',
+          score: parsed.score ?? 0,
         };
-      } catch (parseError) {
+      } catch {
         // Fallback if JSON parsing fails
         this.logger.warn('Failed to parse sentiment JSON, using fallback');
         return {
@@ -117,8 +117,8 @@ export class AiIntegrationService {
         };
       }
     } catch (error) {
-      this.logger.error('OpenAI sentiment analysis error:', error.response?.data || error.message);
-      throw new Error(`Sentiment analysis failed: ${error.response?.data?.error?.message || error.message}`);
+      this.logger.error('OpenAI sentiment analysis error:', error.response?.data ?? error.message);
+      throw new Error(`Sentiment analysis failed: ${error.response?.data?.error?.message ?? error.message}`);
     }
   }
 }
