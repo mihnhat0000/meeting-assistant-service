@@ -28,8 +28,9 @@ export class TaskEntity {
     nullable: true,
   })
   priority: TaskPriority;
+
   @Column({ nullable: true })
-  dueDate: Date | null;
+  dueDate?: Date;
 
   @Column({ nullable: true })
   assigneeId: string;

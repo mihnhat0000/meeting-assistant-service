@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8
+    container_name: nestjs_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: xipat
+      MYSQL_DATABASE: meeting_assistant
+      MYSQL_USER: xipat
+      MYSQL_PASSWORD: xipat123
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: nestjs_phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: '1' # Cho phép nhập server bất kỳ
+      # Bỏ PMA_USER và PMA_PASSWORD để không auto-login
+      # PMA_USER: xipater
+      # PMA_PASSWORD: xipat123
+
+volumes:
+  mysql_data:

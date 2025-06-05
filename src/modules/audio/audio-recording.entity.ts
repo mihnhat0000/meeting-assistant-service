@@ -9,7 +9,19 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '../auth/user.entity';
-import { TranscriptionEntity } from '../transcription/transcription.entity';
+
+// Forward declaration to avoid circular import
+interface ITranscriptionEntity {
+  id: string;
+  audioRecordingId: string;
+  status: string;
+  transcriptText: string;
+  language: string;
+  processedAt: Date;
+  errorMessage: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 @Entity('audio_recordings')
 export class AudioRecordingEntity {
@@ -28,10 +40,8 @@ export class AudioRecordingEntity {
   @Column()
   mimeType: string;
 
-  @Column()
-  size: number;
   @Column({ nullable: true })
-  duration: number | null;
+  duration_time?: number;
 
   @Column({ nullable: true })
   transcriptionId: string;
@@ -46,10 +56,9 @@ export class AudioRecordingEntity {
   @ManyToOne(() => UserEntity, { eager: true })
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
-
-  @OneToOne(() => TranscriptionEntity, (transcription) => transcription.audioRecording, {
+  @OneToOne('TranscriptionEntity', 'audioRecording', {
     eager: false,
     nullable: true,
   })
-  transcription: TranscriptionEntity;
+  transcription: ITranscriptionEntity | null;
 }

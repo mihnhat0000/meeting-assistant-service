@@ -17,7 +17,7 @@ export class AudioService {
     private readonly configService: ConfigService,
   ) {}
 
-  async saveAudioFile(file: Express.Multer.File, userId: string, metadata?: any): Promise<AudioRecordingEntity> {
+  async saveAudioFile(file: Express.Multer.File, userId: string): Promise<AudioRecordingEntity> {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
@@ -46,17 +46,17 @@ export class AudioService {
       // Save file to disk
       fs.writeFileSync(fullPath, file.buffer); // Create database record
       const audioRecording = this.audioRepository.create({
-        userId,
+        user: user,
         originalFileName: file.originalname,
         filePath: fullPath,
         mimeType: file.mimetype,
-        size: file.size,
-        duration: null, // Will be populated later if needed
+        // If your entity has a 'size' property, ensure it's defined there; otherwise, remove or map it appropriately
+        duration_time: 0, // Will be populated later if needed
       });
 
       return await this.audioRepository.save(audioRecording);
     } catch (error) {
-      throw new BadRequestException(`Failed to save audio file: ${error.message}`);
+      throw new BadRequestException(`Failed to save audio file: ${error}`);
     }
   }
 

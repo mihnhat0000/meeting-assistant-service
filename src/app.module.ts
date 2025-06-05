@@ -8,7 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 // Configuration
-import { getTypeOrmConfig } from './config/typeorm.config';
+import { dataSourceOptions } from './config/typeorm.config';
 
 // Core components
 import { HttpExceptionFilter } from './core/filters/http-exception.filter';
@@ -33,14 +33,14 @@ import { TaskManagementModule } from './modules/task_management/task_management.
     // Database configuration
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: getTypeOrmConfig,
+      useFactory: () => dataSourceOptions,
       inject: [ConfigService],
     }),
 
     // Redis/Bull configuration for background jobs
     BullModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         redis: {
           host: configService.get('REDIS_HOST'),
           port: configService.get('REDIS_PORT'),

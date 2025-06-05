@@ -12,7 +12,7 @@ import { UserEntity } from '../auth/user.entity';
     TypeOrmModule.forFeature([AudioRecordingEntity, UserEntity]),
     MulterModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         dest: configService.get<string>('UPLOAD_AUDIO_PATH') || './uploads/audio/',
       }),
       inject: [ConfigService],

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TaskEntity } from './task.entity';
@@ -48,7 +48,7 @@ export class TaskService {
       ...createTaskDto,
       reporterId,
       status: createTaskDto.status || TaskStatus.TODO,
-      dueDate: createTaskDto.dueDate ? new Date(createTaskDto.dueDate) : null,
+      dueDate: createTaskDto.dueDate ? new Date(createTaskDto.dueDate) : undefined,
     });
 
     return await this.taskRepository.save(task);
