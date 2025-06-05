@@ -1,0 +1,22 @@
+{
+  "no-unused-vars": ["error"],
+  "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+  "singleQuote": true,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "semi": true,
+  "printWidth": 130,
+  "jsxSingleQuote": false,
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
+  "bracketSameLine": false,
+  "endOfLine": "lf",
+  "quoteProps": "as-needed",
+  "embeddedLanguageFormatting": "auto",
+  "htmlWhitespaceSensitivity": "css",
+  "proseWrap": "always",
+  "insertPragma": false,
+  "requirePragma": false,
+  "useTabs": false
+}
