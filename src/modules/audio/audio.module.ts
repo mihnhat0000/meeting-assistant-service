@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AudioController } from './audio.controller';
 import { AudioService } from './audio.service';
 import { AudioRecordingEntity } from './audio-recording.entity';
-import { UserEntity } from '../auth/user.entity';
+import { UserEntity } from '../../shared/auth/user.entity';
 
 @Module({
   imports: [

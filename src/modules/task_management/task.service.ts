@@ -2,11 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TaskEntity } from './task.entity';
-import { UserEntity } from '../auth/user.entity';
+import { UserEntity } from '../../shared/auth/user.entity';
 import { AudioRecordingEntity } from '../audio/audio-recording.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { TaskStatus } from '../../shared/enums';
+import { TaskStatus } from '../../shared/types/shared.enums';
 
 @Injectable()
 export class TaskService {

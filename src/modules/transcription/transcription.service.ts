@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { Queue } from 'bull';
 import { TranscriptionEntity } from './transcription.entity';
 import { AudioRecordingEntity } from '../audio/audio-recording.entity';
-import { TranscriptionStatus } from '../../shared/enums';
+import { TranscriptionStatus } from '../../shared/types/shared.enums';
 
 @Injectable()
 export class TranscriptionService {

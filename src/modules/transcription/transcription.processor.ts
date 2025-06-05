@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import * as fs from 'fs';
 import * as FormData from 'form-data';
 import { TranscriptionService } from './transcription.service';
-import { TranscriptionStatus } from '../../shared/enums';
+import { TranscriptionStatus } from '../../shared/types/shared.enums';
 
 interface TranscriptionJobData {
   audioRecordingId: string;

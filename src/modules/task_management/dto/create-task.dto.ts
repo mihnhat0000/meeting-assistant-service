@@ -1,5 +1,5 @@
 import { IsString, IsOptional, IsUUID, IsEnum, IsDateString } from 'class-validator';
-import { TaskStatus, TaskPriority } from '../../../shared/enums';
+import { TaskStatus, TaskPriority } from '../../../shared/types/shared.enums';
 
 export class CreateTaskDto {
   @IsString()

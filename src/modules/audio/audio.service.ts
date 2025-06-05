@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AudioRecordingEntity } from './audio-recording.entity';
-import { UserEntity } from '../auth/user.entity';
+import { UserEntity } from '../../shared/auth/user.entity';
 
 @Injectable()
 export class AudioService {

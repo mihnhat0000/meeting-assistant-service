@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TaskController } from './task.controller';
 import { TaskService } from './task.service';
 import { TaskEntity } from './task.entity';
-import { UserEntity } from '../auth/user.entity';
+import { UserEntity } from '../../shared/auth/user.entity';
 import { AudioRecordingEntity } from '../audio/audio-recording.entity';
 
 @Module({

@@ -6,16 +6,17 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 // Configuration
-import { dataSourceOptions } from './config/typeorm.config';
+// import { getTypeOrmConfig } from './config/typeorm.config';
 
 // Core components
 import { HttpExceptionFilter } from './core/filters/http-exception.filter';
 import { TransformResponseInterceptor } from './core/interceptors/transform-response.interceptor';
 
 // Business modules
-import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule } from './shared/auth/auth.module';
 import { AudioModule } from './modules/audio/audio.module';
 import { TranscriptionModule } from './modules/transcription/transcription.module';
 import { AiIntegrationModule } from './modules/ai_integration/ai_integration.module';
@@ -28,12 +29,24 @@ import { TaskManagementModule } from './modules/task_management/task_management.
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
-    }),
-
-    // Database configuration
+    }), // Database configuration
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: () => dataSourceOptions,
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('DB_HOST') || 'localhost',
+        port: parseInt(configService.get('DB_PORT') || '3306', 10),
+        username: configService.get('DB_USERNAME') || 'root',
+        password: configService.get('DB_PASSWORD') || '',
+        database: configService.get('DB_NAME') || 'meeting_assistant',
+        entityPrefix: process.env.DB_ENTITY_PREFIX || '',
+        autoLoadEntities: true,
+        // entities: ['dist/**/*.entity.js'],
+        synchronize: configService.get('NODE_ENV') !== 'production',
+        logging: configService.get('NODE_ENV') === 'development',
+        charset: 'utf8mb4',
+        namingStrategy: new SnakeNamingStrategy(),
+      }),
       inject: [ConfigService],
     }),
 

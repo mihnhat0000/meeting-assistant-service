@@ -3,7 +3,7 @@ import { JwtAuthGuard } from '../../core/guards/jwt-auth.guard';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { TaskStatus } from '../../shared/enums';
+import { TaskStatus } from '../../shared/types/shared.enums';
 
 @Controller('tasks')
 @UseGuards(JwtAuthGuard)

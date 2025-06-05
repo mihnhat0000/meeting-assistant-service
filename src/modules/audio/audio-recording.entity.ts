@@ -8,7 +8,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { UserEntity } from '../auth/user.entity';
+import { UserEntity } from '../../shared/auth/user.entity';
 
 // Forward declaration to avoid circular import
 interface ITranscriptionEntity {
